@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✔️ To Do List</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <p>✔️ To Do List</p>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Menu lateral esquerdo -->
+            <nav id="sidebar" class="col-md-2 d-none d-md-block sidebar">
+                <div class="sidebar-elementos">
+                    <div class="d-flex align-items-center mb-3 perfil-avatar">
+                        <img src="images/avatar.jpg" alt="Foto do usuário" class="rounded-circle img-fluid" style="width: 50px; height: 50px;">
+                        <div class="ml-3">
+                            <p class="mb-0 "><strong>Fulana</strong></p>
+                            <p class="mb-0" style="word-wrap: break-word;">fulana@mail.com</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#tarefa-hoje" id="hoje-meu-dia">
+                                Meu Dia
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#tarefa-importante" id="importantes">
+                                Importantes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#tarefa-concluida" id="concluidas">
+                                Concluídas
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#tarafa-pessoal" id="categoria-pessoal">
+                                Pessoal
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="categoria-profissional">
+                                Profissional
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="categoria-academico">
+                                Acadêmico
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <div class="task-form fixed-bottom flex-fill mr-3 task-form-add-categoria" id="task-form-categoria">
+                            <input type="text" class="form-control mt-3 input-adicionar input-nova-categoria" id="adicionar-categoria-input" placeholder="+ Nova Categoria">
+                            <div class="input-group-append">
+                                <button class="btn botao-add-categoria" id="adicionar-categoria-btn" type="button">+</button>
+                            </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Conteúdo principal -->
+            <main role="main" class="col-md-8 ml-sm-auto col-lg-10 px-4">
+                <div id="titulo-meio">
+                    <h1 id="titulo-categoria">Meu Dia</h1>
+                    <p id="data-atual"></p>
+                </div>
+
+                <!-- Lista de tarefas -->
+                <div style="max-height: calc(100vh - 200px); overflow-y: auto;">
+                    <ul id="lista-tarefas-hoje" class="list-group"></ul>
+                </div>
+            </main>
+
+            <!-- Aside direito (oculto por padrão) -->
+            <aside id="aside-direito" class="col-md-2 bg-light d-none">
+                <button id="fechar-aside-direito" class="close">&times;</button>
+                <h3 id="titulo-detalhe"></h3>
+                <button id="importancia-detalhe" class="btn btn-outline-secondary"><i class="far fa-star"></i></button>
+                <div id="gerenciar-tarefa" class="gerenciar-tarefa mt-3">
+                    <p>Data: <input type="text" id="data-detalhe" class="form-control"></p>
+                    <p>Lembrete: <button id="lembrete-detalhe" class="btn btn-outline-secondary"><i class="fas fa-bell"></i></button></p>
+                    <p>Anotações:</p>
+                    <textarea id="anotacoes-detalhe" class="form-control" rows="3"></textarea>
+                    <button id="salvar-detalhes" class="btn btn-primary mt-2">Salvar</button>
+                    <button id="excluir-tarefa" class="btn btn-danger mt-2">Excluir</button>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Input fixo para adicionar tarefas -->
+    <div class="task-form fixed-bottom mb-3 task-form-add-tarefa" id="task-form">
+        <div class="input-group">
+            <input type="text" id="titulo-tarefa" class="form-control flex-fill input-adicionar" placeholder="+ Adicionar nova tarefa">
+            <div class="input-group-append">
+                <button class="btn botao-adicionar" id="adicionar-tarefa-btn" type="button">+</i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>
