@@ -1,165 +1,95 @@
-/* Cores personalizadas */
-:root {
-    --rosa-claro: #FCDADA;
-    --verde-turquesa: #5C969E;
-    --texto: rgb(79, 79, 79);
-}
-
 body {
-    background-color: var(--verde-turquesa);
-    font-family: 'Segoe UI', sans-serif;
-    color: var(--texto);
-    font-size: 14px;
-}
-
-header {
-    font-size: 10px;
-    max-height: 16px;
-    background-color: #FFF;
-    padding-left: 30px;
-    padding-top: 2px;
+    background-color: #FCDADA;
+    color: #3D7EA6;
 }
 
 h1 {
-    color: #ffffff;
+    color: #5C969E;
 }
 
-hr{
-    border-color: #8d8d8d;
-    box-sizing:border-box;
-    width: 100%;  
-    margin: 0;
-    margin-bottom: 10px;
-}
-
-/* Estilos para o menu lateral esquerdo */
-#sidebar {
-    background-color: #FFF;
+.sidebar {
+    background-color: #FFA5A5;
     height: 100vh;
     position: fixed;
     left: 0;
-    z-index: 1000;
-}
-
-.sidebar-elementos {
-    padding-top: 20px;
 }
 
 .nav-link {
-    color: var(--texto);
+    color: #3D7EA6;
 }
 
 .nav-link:hover {
-    background-color: #f1f1f1;
-    color: var(--texto);
+    background-color: #5C969E;
+    color: #FFFFFF;
 }
 
-.perfil-avatar {
-    margin-left: 12px;
+.task-form {
+    background-color: rgba(255, 165, 165, 0.9);
+    border-radius: 5px;
+    padding: 1rem;
+    margin-top: 1rem;
 }
 
-/* Estilos para o conteúdo principal */
-#titulo-meio {
-    padding: 40px;
-    padding-left: 20px;
-    margin-bottom: 20px;
+.task-form.fixed-bottom {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    width: calc(100% - 20px);
 }
 
-#data-atual {
-    font-size: 12px;
-    color: #fff;
+.input-group-append .btn {
+    border-radius: 50%;
+    background-color: #5C969E;
+    color: #FFFFFF;
 }
 
-#titulo-categoria {
-    font-size: 26px;
-}
-
-/* Lista de tarefas */
-#lista-tarefas-hoje {
-    list-style: none;
-    padding: 0;
+.input-group-append .btn:hover {
+    background-color: #3D7EA6;
 }
 
 .list-group-item {
-    background-color: var(--rosa-claro);
-    border-radius: 10px;
-    margin-bottom: 10px;
+    background-color: rgba(252, 218, 218, 0.9);
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.list-group-item:hover {
-    background-color: #D3D3D3;
+.list-group-item .fa-star {
+    color: #FFD700;
 }
 
-/* Estilos para o aside direito */
 #aside-direito {
-    background-color: #FFF;
-    padding: 15px;
+    background-color: #FFA5A5;
+    padding: 1rem;
     position: fixed;
     right: 0;
     top: 0;
     height: 100vh;
     overflow-y: auto;
-    z-index: 1000;
 }
 
-/* Estilos para o formulário de adição de tarefas */
-#task-form {
-    display: flex;
-    justify-content: space-between;
-    position: fixed;
-    left: 20%;
-    z-index: 1000;
-}
-
-.task-form-add-tarefa {
-    position: fixed;
-    bottom: 10px;
-    width: calc(100% - 22rem);
-    background-color: #FFF;
-    border-radius: 5px;
-}
-
-.task-form {
-    display: flex;
-    justify-content: space-between;
-    position: fixed;
-    z-index: 1000;
-}
-
-.task-form-add-categoria {
-    position: fixed;
-    border-radius: 5px;
-    z-index: 1000;
-    right: 95%;
-}
-
-.input-group-append .btn:hover {
-    background-color: #fff;
-}
-
-.botao-adicionar{
-    color: var(--texto);
-    background-color: #D3D3D3;
-}
-
-.botao-add-categoria{
-    color: var(--texto);
-    background-color: #D3D3D3;
-    height: 45px;
-    bottom: 0;
-    margin-top: 13px;
-}
-
-.input-adicionar {
-    font-size: 12px;
-    border: none; 
-    height: 50px;
-    width: auto;
-}
-
-.input-nova-categoria {
-    background-color: transparent;
-    height: 40px;
+#detalhes-tarefa p, #detalhes-tarefa textarea {
     margin-bottom: 1rem;
-    margin-left: 2rem;
+}
+
+#detalhes-tarefa button {
+    background-color: #5C969E;
+    color: #FFFFFF;
+}
+
+#detalhes-tarefa button:hover {
+    background-color: #3D7EA6;
+}
+
+.close {
+    float: right;
+    font-size: 1.5rem;
+}
+
+#data-atual {
+    font-size: 1.2rem;
+    color: #5C969E;
 }

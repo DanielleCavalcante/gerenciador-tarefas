@@ -13,8 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const fecharAsideDireito = document.getElementById('fechar-aside-direito');
     const botaoExcluirTarefa = document.getElementById('excluir-tarefa');
     let importancia = false;
-    let tarefas = [];
-    let tarefaSelecionada = null;
 
     // Exibir a data atual
     const dataAtual = new Date();
@@ -33,76 +31,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     botaoAdicionarTarefa.addEventListener('click', () => {
-        const titulo = tituloTarefa.value.trim();
-        if (titulo !== '') {
-            adicionarTarefa(titulo, importancia);
-            tituloTarefa.value = '';
-            importancia = false;
-            estrelaTarefaBtn.innerHTML = '<i class="far fa-star"></i>';
-        }
+        adicionarTarefa(tituloTarefa.value, importancia);
+        tituloTarefa.value = '';
+        importancia = false;
+        estrelaTarefaBtn.innerHTML = '<i class="far fa-star"></i>';
     });
 
     function adicionarTarefa(titulo, importante) {
-        const tarefa = {
-            id: new Date().getTime(),
-            titulo: titulo,
-            importante: importante,
-            data: '',
-            lembrete: false,
-            anotacoes: '',
-            status: 'em aberto'
-        };
-        tarefas.push(tarefa);
-        renderizarTarefa(tarefa);
-    }
-
-    function renderizarTarefa(tarefa) {
         const tarefaItem = document.createElement('li');
         tarefaItem.classList.add('list-group-item');
-        tarefaItem.dataset.id = tarefa.id;
         tarefaItem.innerHTML = `
-            <span>${tarefa.titulo}</span>
-            <button class="btn btn-outline-secondary"><i class="${tarefa.importante ? 'fas' : 'far'} fa-star"></i></button>
+            <span>${titulo}</span>
+            <button class="btn btn-outline-secondary"><i class="${importante ? 'fas' : 'far'} fa-star"></i></button>
         `;
-        tarefaItem.addEventListener('click', () => selecionarTarefa(tarefa));
+        tarefaItem.addEventListener('click', () => selecionarTarefa(tarefaItem, titulo, importante));
         listaTarefasHoje.appendChild(tarefaItem);
     }
 
-    function selecionarTarefa(tarefa) {
-        tarefaSelecionada = tarefa;
-        detalheTitulo.textContent = tarefa.titulo;
-        detalheImportancia.innerHTML = tarefa.importante ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
-        detalheData.value = tarefa.data;
-        detalheLembrete.classList.toggle('active', tarefa.lembrete);
-        detalheAnotacoes.value = tarefa.anotacoes;
+    function selecionarTarefa(elemento, titulo, importante) {
+        detalheTitulo.textContent = titulo;
+        detalheImportancia.innerHTML = importante ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
         asideDireito.classList.remove('d-none');
-
         detalheImportancia.onclick = () => {
-            tarefa.importante = !tarefa.importante;
-            detalheImportancia.innerHTML = tarefa.importante ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
+            importante = !importante;
+            detalheImportancia.innerHTML = importante ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
         };
     }
 
     botaoSalvarDetalhes.addEventListener('click', salvarDetalhes);
 
     function salvarDetalhes() {
-        if (tarefaSelecionada) {
-            tarefaSelecionada.data = detalheData.value;
-            tarefaSelecionada.lembrete = detalheLembrete.classList.contains('active');
-            tarefaSelecionada.anotacoes = detalheAnotacoes.value;
-            tarefaSelecionada.titulo = detalheTitulo.textContent;
-            tarefaSelecionada.importante = detalheImportancia.querySelector('i').classList.contains('fas');
-
-            atualizarTarefaNoDOM(tarefaSelecionada);
-        }
-    }
-
-    function atualizarTarefaNoDOM(tarefa) {
-        const tarefaItem = listaTarefasHoje.querySelector(`[data-id="${tarefa.id}"]`);
-        if (tarefaItem) {
-            tarefaItem.querySelector('span').textContent = tarefa.titulo;
-            tarefaItem.querySelector('button i').className = tarefa.importante ? 'fas fa-star' : 'far fa-star';
-        }
+        // Salvando os detalhes da tarefa
     }
 
     fecharAsideDireito.addEventListener('click', () => {
@@ -112,13 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
     botaoExcluirTarefa.addEventListener('click', excluirTarefa);
 
     function excluirTarefa() {
-        if (tarefaSelecionada) {
-            tarefas = tarefas.filter(t => t.id !== tarefaSelecionada.id);
-            const tarefaItem = listaTarefasHoje.querySelector(`[data-id="${tarefaSelecionada.id}"]`);
-            if (tarefaItem) {
-                tarefaItem.remove();
-            }
-            asideDireito.classList.add('d-none');
-        }
+        // Excluir a tarefa
     }
 });

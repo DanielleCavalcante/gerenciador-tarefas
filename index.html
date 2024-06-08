@@ -3,47 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✔️ To Do List</title>
+    <title>Gerenciador de Tarefas</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/jquery-ui.min.css">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
-        <p>✔️ To Do List</p>
-    </header>
-
     <div class="container-fluid">
         <div class="row">
             <!-- Menu lateral esquerdo -->
-            <nav id="sidebar" class="col-md-2 d-none d-md-block sidebar">
-                <div class="sidebar-elementos">
-                    <div class="d-flex align-items-center mb-3 perfil-avatar">
-                        <img src="images/avatar.jpg" alt="Foto do usuário" class="rounded-circle img-fluid" style="width: 50px; height: 50px;">
-                        <div class="ml-3">
-                            <p class="mb-0 "><strong>Fulana</strong></p>
-                            <p class="mb-0" style="word-wrap: break-word;">fulana@mail.com</p>
-                        </div>
-                    </div>
-                    <hr />
+            <nav id="sidebar" class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#tarefa-hoje" id="hoje-meu-dia">
-                                Meu Dia
+                            <a class="nav-link active" href="#" id="hoje-meu-dia">
+                                Hoje/Meu Dia
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#tarefa-importante" id="importantes">
+                            <a class="nav-link" href="#" id="importantes">
                                 Importantes
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#tarefa-concluida" id="concluidas">
+                            <a class="nav-link" href="#" id="concluidas">
                                 Concluídas
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#tarafa-pessoal" id="categoria-pessoal">
+                            <a class="nav-link" href="#" id="categoria-pessoal">
                                 Pessoal
                             </a>
                         </li>
@@ -58,27 +47,17 @@
                             </a>
                         </li>
                     </ul>
-                    
-                    <div class="task-form fixed-bottom flex-fill mr-3 task-form-add-categoria" id="task-form-categoria">
-                            <input type="text" class="form-control mt-3 input-adicionar input-nova-categoria" id="adicionar-categoria-input" placeholder="+ Nova Categoria">
-                            <div class="input-group-append">
-                                <button class="btn botao-add-categoria" id="adicionar-categoria-btn" type="button">+</button>
-                            </div>
-                    </div>
+                    <button class="btn btn-outline-secondary mt-3" id="adicionar-categoria-btn"><i class="fas fa-plus"></i> Adicionar Nova Categoria</button>
                 </div>
             </nav>
 
             <!-- Conteúdo principal -->
             <main role="main" class="col-md-8 ml-sm-auto col-lg-10 px-4">
-                <div id="titulo-meio">
-                    <h1 id="titulo-categoria">Meu Dia</h1>
-                    <p id="data-atual"></p>
-                </div>
+                <h1 class="h2">Meu Dia</h1>
+                <p id="data-atual"></p>
 
                 <!-- Lista de tarefas -->
-                <div style="max-height: calc(100vh - 200px); overflow-y: auto;">
-                    <ul id="lista-tarefas-hoje" class="list-group"></ul>
-                </div>
+                <ul id="lista-tarefas-hoje" class="list-group"></ul>
             </main>
 
             <!-- Aside direito (oculto por padrão) -->
@@ -99,18 +78,20 @@
     </div>
 
     <!-- Input fixo para adicionar tarefas -->
-    <div class="task-form fixed-bottom mb-3 task-form-add-tarefa" id="task-form">
+    <div id="task-form" class="task-form fixed-bottom mb-3">
         <div class="input-group">
-            <input type="text" id="titulo-tarefa" class="form-control flex-fill input-adicionar" placeholder="+ Adicionar nova tarefa">
+            <input type="text" id="titulo-tarefa" class="form-control" placeholder="Adicionar nova tarefa...">
             <div class="input-group-append">
-                <button class="btn botao-adicionar" id="adicionar-tarefa-btn" type="button">+</i></button>
+                <button class="btn btn-outline-secondary" id="estrela-tarefa-btn" type="button"><i class="fas fa-star"></i></button>
+                <button class="btn btn-primary" id="adicionar-tarefa-btn" type="button"><i class="fas fa-plus"></i></button>
             </div>
         </div>
     </div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
 </body>
 </html>
