@@ -13,7 +13,7 @@ Bem-vindo ao Gerenciador de Tarefas, um projeto desenvolvido como parte do proje
 
 Este projeto foi desenvolvido como parte do projeto final prático da disciplina de Programação Web (PWEB) da Fatec Sorocaba, sob orientação da professora Denilce Veloso.
 
-### Funcionalidades Propostas
+## Funcionalidades Propostas
 
 - **Criação de Tarefas**: Crie, altere ou exclua tarefas para organizar suas atividades.
 - **Notificações**: Receba notificações para lembretes de tarefas e prazos próximos.
