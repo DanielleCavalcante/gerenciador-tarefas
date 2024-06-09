@@ -16,20 +16,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const botaoAdicionarCategoria = document.getElementById('adicionar-categoria-btn');
     const inputAdicionarCategoria = document.getElementById('adicionar-categoria-input');
     const listaCategorias = document.getElementById('lista-categorias');
+    const tituloCategoria = document.getElementById('titulo-categoria');
     let importancia = false;
-    let categorias = ['Meu Dia', 'Importantes', 'Concluídas', 'Pessoal', 'Profissional', 'Acadêmico'];
-    let tarefas = [];
+    let categorias = JSON.parse(localStorage.getItem('categorias')) || ['Pessoal', 'Profissional', 'Acadêmico'];
+    let tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+    let categoriaAtual = localStorage.getItem('categoriaAtual') || 'Meu Dia';
 
     // Exibir a data atual
     const dataAtual = new Date();
     const diasDaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
-    const dataAtualFormatada = `${dataAtual.getDate()}, ${diasDaSemana[dataAtual.getDay()]}`;
+    const MesesDoAno = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+    const dataAtualFormatada = `${diasDaSemana[dataAtual.getDay()]}, ${dataAtual.getDate()} de ${MesesDoAno[dataAtual.getMonth()]}`;
     document.getElementById('data-atual').textContent = dataAtualFormatada;
+
+    function salvarCategorias() {
+        localStorage.setItem('categorias', JSON.stringify(categorias));
+    }    
 
     // Adicionar categorias ao select e à navbar
     function atualizarCategorias() {
         detalheCategoria.innerHTML = '';
         listaCategorias.innerHTML = '';
+
+        ['Meu Dia', 'Importantes', 'Concluídas'].forEach(categoria => {
+            const navItem = document.createElement('li');
+            navItem.classList.add('nav-item');
+            navItem.innerHTML = `<a class="nav-link" href="#" data-categoria="${categoria}">${categoria}</a>`;
+            listaCategorias.appendChild(navItem);
+        });
+
         categorias.forEach(categoria => {
             const option = document.createElement('option');
             option.value = categoria;
@@ -38,18 +53,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const navItem = document.createElement('li');
             navItem.classList.add('nav-item');
-            navItem.innerHTML = `<a class="nav-link" href="#tarefa-${categoria.toLowerCase()}" id="categoria-${categoria.toLowerCase()}">${categoria}</a>`;
+            navItem.innerHTML = `<a class="nav-link" href="#" data-categoria="${categoria}">${categoria}</a>`;
             listaCategorias.appendChild(navItem);
+        });
+
+        document.querySelectorAll('#lista-categorias a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const categoria = link.getAttribute('data-categoria');
+                tituloCategoria.textContent = categoria;
+                categoriaAtual = categoria;
+                localStorage.setItem('categoriaAtual', categoria);
+                exibirTarefas(categoria);
+            });
         });
     }
 
+    function salvarTarefas() {
+        localStorage.setItem('tarefas', JSON.stringify(tarefas));
+    }
+
+    function exibirTarefas(categoria) {
+        listaTarefasHoje.innerHTML = '';
+        const hoje = new Date().toISOString().split('T')[0];
+        let tarefasFiltradas = [];
+
+        if (categoria === 'Meu Dia') {
+            tarefasFiltradas = tarefas.filter(tarefa => tarefa.data === hoje && !tarefa.concluida);
+        } else if (categoria === 'Importantes') {
+            tarefasFiltradas = tarefas.filter(tarefa => tarefa.importancia && !tarefa.concluida);
+        } else if (categoria === 'Concluídas') {
+            tarefasFiltradas = tarefas.filter(tarefa => tarefa.concluida);
+        } else {
+            tarefasFiltradas = tarefas.filter(tarefa => tarefa.categoria === categoria && !tarefa.concluida);
+        }
+
+        tarefasFiltradas.forEach(tarefa => adicionarTarefaNaLista(tarefa));
+        asideDireito.classList.add('d-none');
+    }
+
     atualizarCategorias();
+    exibirTarefas(categoriaAtual);
 
     // Adicionar nova categoria
     botaoAdicionarCategoria.addEventListener('click', () => {
         const novaCategoria = inputAdicionarCategoria.value.trim();
         if (novaCategoria && !categorias.includes(novaCategoria)) {
             categorias.push(novaCategoria);
+            salvarCategorias();
             atualizarCategorias();
             inputAdicionarCategoria.value = '';
         }
@@ -62,12 +113,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const novaTarefa = {
                 id: Date.now(),
                 titulo: titulo,
-                importancia: false,
+                importancia: categoriaAtual === 'Importantes',
                 concluida: false,
-                categoria: 'Meu Dia'
+                data: categoriaAtual === 'Meu Dia' ? new Date().toISOString().split('T')[0] : '',
+                lembrete: '',
+                anotacoes: '',
+                categoria: categoriaAtual !== 'Meu Dia' && categoriaAtual !== 'Importantes' && categoriaAtual !== 'Concluídas' ? categoriaAtual : ''
             };
             tarefas.push(novaTarefa);
-            adicionarTarefaNaLista(novaTarefa);
+            salvarTarefas();
+            exibirTarefas(categoriaAtual);
             tituloTarefa.value = '';
         }
     });
@@ -75,36 +130,41 @@ document.addEventListener('DOMContentLoaded', () => {
     // Adicionar tarefa na lista de tarefas
     function adicionarTarefaNaLista(tarefa) {
         const li = document.createElement('li');
-        li.classList.add('list-group-item');
+        li.classList.add('list-group-item', 'tarefa-item');
         li.innerHTML = `
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="tarefa-concluida" id="tarefa-${tarefa.id}">
+                <input class="form-check-input" type="checkbox" id="tarefa-${tarefa.id}" ${tarefa.concluida ? 'checked' : ''}>
                 <label class="form-check-label" for="tarefa-${tarefa.id}">
                     ${tarefa.titulo}
                 </label>
+                <small class="text-muted">${tarefa.categoria}</small>
             </div>
         `;
+
+        if (tarefa.importancia) {
+            li.style.borderLeft = '4px solid yellow';
+        }
+
         listaTarefasHoje.appendChild(li);
 
-        const radio = li.querySelector('.form-check-input');
-        radio.addEventListener('change', () => {
-            tarefa.concluida = radio.checked;
-            if (tarefa.concluida) {
-                li.classList.add('concluida');
-            } else {
-                li.classList.remove('concluida');
-            }
+        const checkbox = li.querySelector('.form-check-input');
+        checkbox.addEventListener('change', () => {
+            tarefa.concluida = checkbox.checked;
+            salvarTarefas();
+            exibirTarefas(categoriaAtual);
         });
 
-        li.addEventListener('click', () => {
-            abrirDetalhesTarefa(tarefa);
-        });
+        if (!tarefa.concluida) {
+            li.addEventListener('click', () => {
+                abrirDetalhesTarefa(tarefa);
+            });
+        }
     }
 
     // Abrir detalhes da tarefa
     function abrirDetalhesTarefa(tarefa) {
         detalheTitulo.value = tarefa.titulo;
-        detalheImportancia.innerHTML = tarefa.importancia ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
+        detalheImportancia.checked = tarefa.importancia;
         detalheData.value = tarefa.data || '';
         detalheLembrete.value = tarefa.lembrete || '';
         detalheAnotacoes.value = tarefa.anotacoes || '';
@@ -112,9 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
         importancia = tarefa.importancia;
         asideDireito.classList.remove('d-none');
 
-        detalheImportancia.onclick = () => {
-            importancia = !importancia;
-            detalheImportancia.innerHTML = importancia ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
+        detalheImportancia.onchange = () => {
+            importancia = detalheImportancia.checked;
         };
 
         botaoSalvarDetalhes.onclick = () => {
@@ -124,41 +183,54 @@ document.addEventListener('DOMContentLoaded', () => {
             tarefa.lembrete = detalheLembrete.value;
             tarefa.anotacoes = detalheAnotacoes.value;
             tarefa.categoria = detalheCategoria.value;
-
-            li.querySelector('.form-check-label').textContent = tarefa.titulo;
+            tarefa.notificado = false; // Resetar notificação
+            salvarTarefas();
             asideDireito.classList.add('d-none');
-
-            if (tarefa.lembrete) {
-                definirLembrete(tarefa);
-            }
+            exibirTarefas(categoriaAtual);
         };
 
         botaoExcluirTarefa.onclick = () => {
             tarefas = tarefas.filter(t => t.id !== tarefa.id);
-            li.remove();
+            salvarTarefas();
+            asideDireito.classList.add('d-none');
+            exibirTarefas(categoriaAtual);
+        };
+
+        fecharAsideDireito.onclick = () => {
             asideDireito.classList.add('d-none');
         };
     }
 
-    // Definir lembrete
-    function definirLembrete(tarefa) {
-        const [hora, minuto] = tarefa.lembrete.split(':');
-        const agora = moment();
-        const momentoLembrete = moment().hours(hora).minutes(minuto);
-
-        if (momentoLembrete.isAfter(agora)) {
-            const diferenca = momentoLembrete.diff(agora);
-            setTimeout(() => {
-                Push.create("Lembrete de Tarefa", {
-                    body: `Está na hora de: ${tarefa.titulo}`,
-                    icon: 'images/icon.png',
-                    timeout: 5000
-                });
-            }, diferenca);
+    // Fechar aside ao clicar fora dele
+    document.addEventListener('click', (event) => {
+        if (!asideDireito.contains(event.target) && !event.target.closest('.tarefa-item')) {
+            asideDireito.classList.add('d-none');
         }
-    }
-
-    fecharAsideDireito.addEventListener('click', () => {
-        asideDireito.classList.add('d-none');
     });
-});
+
+    // Verificar lembretes
+    setInterval(() => {
+        const agora = new Date();
+        tarefas.forEach(tarefa => {
+            if (tarefa.lembrete && tarefa.data) {
+                const [lembreteHora, lembreteMinuto] = tarefa.lembrete.split(':').map(Number);
+                const [ano, mes, dia] = tarefa.data.split('-').map(Number);
+                const lembreteData = new Date(ano, mes - 1, dia, lembreteHora, lembreteMinuto);
+
+                if (lembreteData <= agora && !tarefa.notificado) {
+                    Push.create('Lembrete de Tarefa', {
+                        body: `Lembrete: ${tarefa.titulo}`,
+                        icon: '/path/to/icon.png', // Coloque o caminho para um ícone, se desejado
+                        timeout: 4000,
+                        onClick: function () {
+                            window.focus();
+                            this.close();
+                        }
+                    });
+                    tarefa.notificado = true; // Marcar tarefa como notificada
+                    salvarTarefas();
+                }
+            }
+        });
+    }, 60000); // Verificar a cada minuto
+})

@@ -6,6 +6,7 @@
     <title>✔️ To Do List</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css" />
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -27,36 +28,7 @@
                     </div>
                     <hr />
                     <ul class="nav flex-column" id="lista-categorias">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#tarefa-hoje" id="hoje-meu-dia">
-                                Meu Dia
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#tarefa-importante" id="importantes">
-                                Importantes
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#tarefa-concluida" id="concluidas">
-                                Concluídas
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#tarefa-pessoal" id="categoria-pessoal">
-                                Pessoal
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#tarefa-profissional" id="categoria-profissional">
-                                Profissional
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#tarefa-academica" id="categoria-academico">
-                                Acadêmico
-                            </a>
-                        </li>
+                        <!-- Categorias dinâmicas serão adicionadas aqui -->
                     </ul>
                     
                     <div class="task-form fixed-bottom flex-fill mr-3 task-form-add-categoria" id="task-form-categoria">
@@ -104,7 +76,7 @@
 
     <!-- Input fixo para adicionar tarefas -->
     <div class="task-form fixed-bottom mb-3 task-form-add-tarefa" id="task-form">
-        <div class="input-group">
+        <div class="input-group" style="max-height: calc(100vh - 200px); overflow-y: auto;">
             <input type="text" id="titulo-tarefa" class="form-control flex-fill input-adicionar" placeholder="+ Adicionar nova tarefa">
             <div class="input-group-append">
                 <button class="btn botao-adicionar" id="adicionar-tarefa-btn" type="button">+</button>
@@ -117,6 +89,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.12/push.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.js"></script>
     <script src="js/scripts.js"></script>
 </body>
 </html>

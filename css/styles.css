@@ -112,7 +112,6 @@ hr {
 #task-form {
     display: flex;
     justify-content: space-between;
-    position: fixed;
     left: 20%;
     z-index: 1000;
 }
