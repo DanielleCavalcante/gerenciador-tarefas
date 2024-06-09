@@ -21,12 +21,12 @@
                     <div class="d-flex align-items-center mb-3 perfil-avatar">
                         <img src="images/avatar.jpg" alt="Foto do usuário" class="rounded-circle img-fluid" style="width: 50px; height: 50px;">
                         <div class="ml-3">
-                            <p class="mb-0 "><strong>Fulana</strong></p>
+                            <p class="mb-0"><strong>Fulana</strong></p>
                             <p class="mb-0" style="word-wrap: break-word;">fulana@mail.com</p>
                         </div>
                     </div>
                     <hr />
-                    <ul class="nav flex-column">
+                    <ul class="nav flex-column" id="lista-categorias">
                         <li class="nav-item">
                             <a class="nav-link active" href="#tarefa-hoje" id="hoje-meu-dia">
                                 Meu Dia
@@ -43,27 +43,27 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#tarafa-pessoal" id="categoria-pessoal">
+                            <a class="nav-link" href="#tarefa-pessoal" id="categoria-pessoal">
                                 Pessoal
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" id="categoria-profissional">
+                            <a class="nav-link" href="#tarefa-profissional" id="categoria-profissional">
                                 Profissional
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" id="categoria-academico">
+                            <a class="nav-link" href="#tarefa-academica" id="categoria-academico">
                                 Acadêmico
                             </a>
                         </li>
                     </ul>
                     
                     <div class="task-form fixed-bottom flex-fill mr-3 task-form-add-categoria" id="task-form-categoria">
-                            <input type="text" class="form-control mt-3 input-adicionar input-nova-categoria" id="adicionar-categoria-input" placeholder="+ Nova Categoria">
-                            <div class="input-group-append">
-                                <button class="btn botao-add-categoria" id="adicionar-categoria-btn" type="button">+</button>
-                            </div>
+                        <input type="text" class="form-control mt-3 input-adicionar input-nova-categoria" id="adicionar-categoria-input" placeholder="+ Nova Categoria">
+                        <div class="input-group-append">
+                            <button class="btn botao-add-categoria" id="adicionar-categoria-btn" type="button">+</button>
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -84,17 +84,21 @@
             <!-- Aside direito (oculto por padrão) -->
             <aside id="aside-direito" class="col-md-2 bg-light d-none">
                 <button id="fechar-aside-direito" class="close">&times;</button>
-                <h3 id="titulo-detalhe"></h3>
-                <button id="importancia-detalhe" class="btn btn-outline-secondary"><i class="far fa-star"></i></button>
+                <input type="text" id="titulo-detalhe" class="form-control">
+                <select id="categoria-detalhe" class="form-control mt-2"></select>
+                <div class="form-check mt-2">
+                    <input type="checkbox" class="form-check-input" id="importancia-detalhe">
+                    <label class="form-check-label" for="importancia-detalhe">Importante</label>
+                </div>
                 <div id="gerenciar-tarefa" class="gerenciar-tarefa mt-3">
-                    <p>Data: <input type="text" id="data-detalhe" class="form-control"></p>
-                    <p>Lembrete: <button id="lembrete-detalhe" class="btn btn-outline-secondary"><i class="fas fa-bell"></i></button></p>
+                    <p>Data de Conclusão: <input type="date" id="data-detalhe" class="form-control"></p>
+                    <p>Lembrete: <input type="time" id="lembrete-detalhe" class="form-control"></p>
                     <p>Anotações:</p>
                     <textarea id="anotacoes-detalhe" class="form-control" rows="3"></textarea>
                     <button id="salvar-detalhes" class="btn btn-primary mt-2">Salvar</button>
                     <button id="excluir-tarefa" class="btn btn-danger mt-2">Excluir</button>
                 </div>
-            </aside>
+            </aside>    
         </div>
     </div>
 
@@ -103,14 +107,16 @@
         <div class="input-group">
             <input type="text" id="titulo-tarefa" class="form-control flex-fill input-adicionar" placeholder="+ Adicionar nova tarefa">
             <div class="input-group-append">
-                <button class="btn botao-adicionar" id="adicionar-tarefa-btn" type="button">+</i></button>
+                <button class="btn botao-adicionar" id="adicionar-tarefa-btn" type="button">+</button>
             </div>
         </div>
     </div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.12/push.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="js/scripts.js"></script>
 </body>
 </html>
