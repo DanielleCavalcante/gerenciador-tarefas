@@ -28,6 +28,10 @@ Este projeto foi desenvolvido como parte do projeto final prático da disciplina
 
 ## 🎨 Como Usar
 
+1. Acesse peli link: https://daniellecavalcante.github.io/gerenciador-tarefas/
+   
+ou
+
 1. Clone este repositório em seu computador.
 2. Abra o arquivo `index.html` em seu navegador favorito.
 3. Comece a organizar suas tarefas de forma divertida e eficiente!
